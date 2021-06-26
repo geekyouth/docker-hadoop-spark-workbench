@@ -11,8 +11,10 @@ services:
       - ./hadoop.env
     ports:
       - 50070:50070
+      - 8020:8020
   datanode:
     image: bde2020/hadoop-datanode:1.1.0-hadoop2.8-java8
+    container_name: datanode
     depends_on: 
       - namenode
     volumes:
@@ -27,10 +29,12 @@ services:
     ports:
       - 8080:8080
       - 7077:7077
+      - 6066:6066
     env_file:
       - ./hadoop.env
   spark-worker:
     image: bde2020/spark-worker:2.2.0-hadoop2.8-hive-java8
+    container_name: spark-worker
     depends_on:
       - spark-master
     environment:
@@ -48,6 +52,7 @@ services:
       - 9001:9001
   hue:
     image: bde2020/hdfs-filebrowser:3.11
+    container_name: hue
     ports:
       - 8088:8088
     environment:
